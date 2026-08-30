@@ -98,4 +98,4 @@ Defined in `src/content.config.ts`. Frontmatter fields: `title`,
 - [x] GitHub repo created and pushed (`jcurato/jcurato-blogs`)
 - [x] Cloudflare Pages connected (`jcurato-blogs` project, auto-deploy on push to `main`)
 - [x] First post published — live at `jcurato.com/blog/fluent-bit-short-lived-pods/`
-- [ ] Google Search Console verified
+- [x] Google Search Console verified (domain property, DNS TXT method) and sitemap submitted
