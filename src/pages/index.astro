@@ -153,7 +153,7 @@ const latest = posts[0];
 			}
 
 			.cohort {
-				background: rgb(var(--black));
+				background: #0b0e16;
 				color: white;
 				border-radius: 12px;
 				padding: 2.5rem;
@@ -163,18 +163,32 @@ const latest = posts[0];
 				gap: 2rem;
 				flex-wrap: wrap;
 			}
+			:global([data-theme='dark']) .cohort {
+				background: var(--accent);
+			}
+			@media (prefers-color-scheme: dark) {
+				:global(html:not([data-theme='light'])) .cohort {
+					background: var(--accent);
+				}
+			}
 			.cohort h2 {
 				color: white;
 				font-size: 1.6rem;
 				margin-bottom: 0.4rem;
 			}
 			.cohort p {
-				color: rgb(var(--gray-light));
+				color: #c7cede;
 				margin: 0;
 				max-width: 50ch;
 			}
 			.cohort .btn-primary {
 				white-space: nowrap;
+				background: white;
+				color: #0b0e16;
+			}
+			.cohort .btn-primary:hover {
+				background: #c7cede;
+				color: #0b0e16;
 			}
 
 			@media (max-width: 860px) {
