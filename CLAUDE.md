@@ -95,7 +95,7 @@ Defined in `src/content.config.ts`. Frontmatter fields: `title`,
 - [ ] Domain registered
 - [x] Astro project initialised
 - [x] GitHub org created (`jcurato`)
-- [ ] GitHub repo created and pushed
+- [x] GitHub repo created and pushed (`jcurato/jcurato-blogs`)
 - [ ] Cloudflare Pages connected
 - [ ] First post published
 - [ ] Google Search Console verified
