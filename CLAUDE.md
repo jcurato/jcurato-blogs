@@ -92,7 +92,7 @@ Defined in `src/content.config.ts`. Frontmatter fields: `title`,
 
 - [x] Domain available and identified: `jcurato.com`
 - [x] First post drafted: `fluent-bit-short-lived-pods.md`
-- [ ] Domain registered
+- [x] Domain registered (`jcurato.com`, registered via Cloudflare under `jcuratosolutions@gmail.com`)
 - [x] Astro project initialised
 - [x] GitHub org created (`jcurato`)
 - [x] GitHub repo created and pushed (`jcurato/jcurato-blogs`)
