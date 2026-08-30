@@ -1,48 +1,372 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latest = posts[0];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.wide {
+				width: 1100px;
+				max-width: calc(100% - 2em);
+			}
+
+			.hero {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 3rem;
+				align-items: center;
+				padding: 4rem 0 5rem;
+			}
+			.eyebrow {
+				color: var(--accent);
+				font-weight: 700;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				font-size: 0.9rem;
+				margin-bottom: 0.75rem;
+			}
+			.hero h1 {
+				font-size: 2.9rem;
+				line-height: 1.15;
+			}
+			.hero p.lede {
+				font-size: 1.15rem;
+				color: rgb(var(--gray));
+				max-width: 46ch;
+			}
+			.cta-row {
+				display: flex;
+				gap: 1rem;
+				margin-top: 2rem;
+				flex-wrap: wrap;
+			}
+			.btn {
+				display: inline-block;
+				padding: 0.8em 1.4em;
+				border-radius: 8px;
+				font-weight: 700;
+				text-decoration: none;
+				transition: 0.15s ease;
+			}
+			.btn-primary {
+				background: var(--accent);
+				color: white;
+			}
+			.btn-primary:hover {
+				background: var(--accent-dark);
+				color: white;
+			}
+			.btn-secondary {
+				background: transparent;
+				color: rgb(var(--black));
+				border: 1px solid rgb(var(--gray-light));
+			}
+			.btn-secondary:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.hero-art {
+				width: 100%;
+				height: auto;
+			}
+
+			section.block {
+				padding: 3.5rem 0;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+			section.block h2 {
+				font-size: 1.7rem;
+			}
+			.section-kicker {
+				color: rgb(var(--gray));
+				font-size: 1.05rem;
+				margin-top: -0.25rem;
+				margin-bottom: 2rem;
+				max-width: 60ch;
+			}
+
+			.featured {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 0.5rem;
+				background: rgb(var(--gray-light) / 40%);
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 12px;
+				padding: 2rem;
+			}
+			.featured .tag {
+				color: var(--accent);
+				font-weight: 700;
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 0.03em;
+			}
+			.featured h3 {
+				margin: 0.3rem 0 0.6rem;
+			}
+			.featured h3 a {
+				color: rgb(var(--black));
+				text-decoration: none;
+			}
+			.featured h3 a:hover {
+				color: var(--accent);
+			}
+			.featured p {
+				color: rgb(var(--gray));
+				margin-bottom: 0.5rem;
+			}
+			.featured .date {
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+			}
+
+			.props {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2rem;
+			}
+			.prop h4 {
+				display: flex;
+				align-items: center;
+				gap: 0.6rem;
+				font-size: 1.15rem;
+			}
+			.prop svg {
+				flex-shrink: 0;
+				color: var(--accent);
+			}
+			.prop p {
+				color: rgb(var(--gray));
+				margin: 0;
+			}
+
+			.cohort {
+				background: rgb(var(--black));
+				color: white;
+				border-radius: 12px;
+				padding: 2.5rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 2rem;
+				flex-wrap: wrap;
+			}
+			.cohort h2 {
+				color: white;
+				font-size: 1.6rem;
+				margin-bottom: 0.4rem;
+			}
+			.cohort p {
+				color: rgb(var(--gray-light));
+				margin: 0;
+				max-width: 50ch;
+			}
+			.cohort .btn-primary {
+				white-space: nowrap;
+			}
+
+			@media (max-width: 860px) {
+				.hero {
+					grid-template-columns: 1fr;
+					padding: 2.5rem 0 3rem;
+					text-align: left;
+				}
+				.hero h1 {
+					font-size: 2.1rem;
+				}
+				.props {
+					grid-template-columns: 1fr;
+				}
+				.cohort {
+					padding: 1.75rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="wide">
+			<section class="hero">
+				<div>
+					<p class="eyebrow">J Curato Solutions</p>
+					<h1>What actually breaks in production &mdash; and how to find it.</h1>
+					<p class="lede">
+						A technical blog and training ground for DevOps engineers who can run
+						<code>kubectl</code> but can't yet debug a log pipeline, a flaky rollout, or a cluster
+						that's lying about its own health.
+					</p>
+					<div class="cta-row">
+						<a class="btn btn-primary" href="/blog">Read the blog</a>
+						<a
+							class="btn btn-secondary"
+							href="mailto:jcuratosolutions@gmail.com?subject=Notify%20me%20about%20the%20DevOps%20%2B%20AI%20cohort"
+						>
+							Get notified about the cohort
+						</a>
+					</div>
+				</div>
+				<svg
+					class="hero-art"
+					viewBox="0 0 560 420"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					role="img"
+					aria-label="Diagram of a short-lived pod's logs racing a log-shipping scan interval before being garbage collected"
+				>
+					<rect x="18" y="150" width="130" height="110" rx="14" stroke="#2337FF" stroke-width="3" />
+					<text x="83" y="140" text-anchor="middle" font-size="14" font-weight="700" fill="#20263a"
+						>pod</text
+					>
+					<rect x="38" y="172" width="90" height="10" rx="5" fill="#e5e9f0" />
+					<rect x="38" y="190" width="90" height="10" rx="5" fill="#e5e9f0" />
+					<rect x="38" y="208" width="60" height="10" rx="5" fill="#e5e9f0" />
+					<circle cx="83" cy="240" r="10" stroke="#2337FF" stroke-width="2.5" />
+					<path d="M83 234v6l4 4" stroke="#2337FF" stroke-width="2.5" stroke-linecap="round" />
+					<text x="83" y="285" text-anchor="middle" font-size="12" fill="#60739f">completes in &lt;60s</text
+					>
+
+					<path
+						d="M158 200 C 210 200, 210 130, 260 130"
+						stroke="#c7cede"
+						stroke-width="2.5"
+						stroke-dasharray="5 6"
+					/>
+					<circle cx="260" cy="130" r="26" stroke="#000d8a" stroke-width="3" />
+					<circle cx="253" cy="123" r="9" stroke="#000d8a" stroke-width="2.5" fill="none" />
+					<line x1="259" y1="129" x2="270" y2="140" stroke="#000d8a" stroke-width="2.5" stroke-linecap="round" />
+					<text x="260" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#20263a"
+						>tail scan</text
+					>
+					<text x="260" y="175" text-anchor="middle" font-size="12" fill="#60739f">every 60s</text>
+
+					<path
+						d="M158 220 C 220 260, 220 300, 280 300"
+						stroke="#c7cede"
+						stroke-width="2.5"
+						stroke-dasharray="5 6"
+					/>
+					<rect x="280" y="278" width="120" height="44" rx="8" stroke="#e0455c" stroke-width="3" />
+					<text x="340" y="304" text-anchor="middle" font-size="13" font-weight="700" fill="#e0455c"
+						>gc'd @56s</text
+					>
+
+					<path
+						d="M287 130 C 340 130, 340 130, 392 130"
+						stroke="#2337FF"
+						stroke-width="3"
+						marker-end="url(#arrow)"
+					/>
+					<rect x="392" y="90" width="150" height="80" rx="10" stroke="#2337FF" stroke-width="3" />
+					<ellipse cx="467" cy="106" rx="60" ry="10" stroke="#2337FF" stroke-width="2.5" />
+					<line x1="407" y1="106" x2="407" y2="154" stroke="#2337FF" stroke-width="2.5" />
+					<line x1="527" y1="106" x2="527" y2="154" stroke="#2337FF" stroke-width="2.5" />
+					<path
+						d="M407 154 C 407 160, 437 164, 467 164 C 497 164, 527 160, 527 154"
+						stroke="#2337FF"
+						stroke-width="2.5"
+					/>
+					<text x="467" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="#20263a"
+						>Loki</text
+					>
+
+					<text x="467" y="226" text-anchor="middle" font-size="12" fill="#60739f"
+						>only if the scan wins the race</text
+					>
+
+					<defs>
+						<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+							<path d="M0 0 L8 4 L0 8 Z" fill="#2337FF" />
+						</marker>
+					</defs>
+				</svg>
+			</section>
+
+			{
+				latest && (
+					<section class="block">
+						<p class="tag" style="color: var(--accent); font-weight: 700; margin-bottom: 0.5rem;">
+							Latest post
+						</p>
+						<div class="featured">
+							<h3>
+								<a href={`/blog/${latest.id}/`}>{latest.data.title}</a>
+							</h3>
+							<p>{latest.data.description}</p>
+							<p class="date">
+								<FormattedDate date={latest.data.pubDate} />
+							</p>
+						</div>
+					</section>
+				)
+			}
+
+			<section class="block">
+				<h2>Every post starts with a real incident</h2>
+				<p class="section-kicker">
+					Not tutorial coverage. Something that broke, the wrong first guess, and the mechanical
+					reason underneath it.
+				</p>
+				<div class="props">
+					<div class="prop">
+						<h4>
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
+								<circle cx="12" cy="12" r="4" />
+							</svg>
+							The wrong first assumption
+						</h4>
+						<p>Where I actually looked first, and why it was a dead end.</p>
+					</div>
+					<div class="prop">
+						<h4>
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+							</svg>
+							What's mechanically happening
+						</h4>
+						<p>The actual system behavior underneath the symptom — not a guess.</p>
+					</div>
+					<div class="prop">
+						<h4>
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M12 20V10M18 20V4M6 20v-4" />
+							</svg>
+							Fixes, with trade-offs
+						</h4>
+						<p>In the order I'd actually try them, and what each one costs you.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="block">
+				<div class="cohort">
+					<div>
+						<h2>DevOps + AI training, coming soon</h2>
+						<p>
+							A small paid cohort built from the same production material as this blog — for
+							engineers who want to go from "I can follow a tutorial" to "I can debug this myself."
+						</p>
+					</div>
+					<a
+						class="btn btn-primary"
+						href="mailto:jcuratosolutions@gmail.com?subject=Notify%20me%20about%20the%20DevOps%20%2B%20AI%20cohort"
+					>
+						Notify me
+					</a>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
