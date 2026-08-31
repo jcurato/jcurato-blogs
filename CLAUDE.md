@@ -52,6 +52,19 @@ Preferred post shape:
 Module 5 is the signature topic and the first post. Do not write these in
 order; start with the hardest and most distinctive material.
 
+### Where "AI" fits (the other half of "DevOps + AI")
+
+Not a separate module. AI tooling (LLMs, coding/debugging agents) shows up
+inside every module as a habit, not a chapter: it's fast, and wrong in the
+same way a rushed human is — a confident first answer that hasn't been
+checked against the actual mechanism yet. Each module should show one
+concrete place the tooling genuinely helps (config review, IAM policy
+audits, correlating dashboards, drafting a parser) and one place its first
+answer is a trap worth catching. Module 5 is the clearest example: an agent
+asked "why are these logs missing" will likely give the same wrong first
+assumption a human gives (see the published post) — that's the throughline,
+not "add an AI chapter."
+
 ## Tech stack
 
 - **Astro** (blog template), Markdown content in `src/content/blog/`
