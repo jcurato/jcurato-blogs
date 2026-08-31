@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Separate git repo (jcurato/devops-training-labs), kept out of this repo's tracking
+devops-training-labs/
