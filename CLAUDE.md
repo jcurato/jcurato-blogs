@@ -40,8 +40,8 @@ Preferred post shape:
 
 ## Course outline (posts map to these modules)
 
-1. Cluster foundation — GKE setup, node pools, networking, why defaults fail
-2. Identity and access — Workload Identity, service accounts, secretless access
+1. Cluster foundation — EKS setup, node groups, VPC networking, why defaults fail
+2. Identity and access — IAM Roles for Service Accounts (IRSA) / EKS Pod Identity, secretless access
 3. How a cluster talks — logs vs metrics vs traces, and when each applies
 4. Log pipeline — Fluent Bit architecture: DaemonSet, buffering, parsing
 5. **Where logs get lost** — short-lived pods, rotation races, buffer overflow
@@ -74,7 +74,7 @@ Defined in `src/content.config.ts`. Frontmatter fields: `title`,
 ## SEO basics
 
 - Post titles use the words people actually type. Good: "Fluent Bit missing
-  logs from short-lived pods in GKE". Bad: "Observability Deep Dive Part 1".
+  logs from short-lived pods in EKS". Bad: "Observability Deep Dive Part 1".
 - URLs without dates: `/blog/fluent-bit-short-lived-pods`
 - Sitemap and meta descriptions come from the Astro blog template
 - Google Search Console registered from day one — the search queries that bring

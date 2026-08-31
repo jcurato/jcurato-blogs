@@ -2,7 +2,7 @@
 title: "Why Fluent Bit misses logs from short-lived pods"
 description: "A connector pod finished in under a minute and its logs never reached Loki. The cause wasn't log deletion — it was a discovery race in the tail plugin."
 pubDate: 2026-08-30
-tags: ["kubernetes", "fluent-bit", "loki", "observability", "gke"]
+tags: ["kubernetes", "fluent-bit", "loki", "observability", "eks", "aws"]
 ---
 
 A developer on my team came to me with a question that sounds simple and isn't:
